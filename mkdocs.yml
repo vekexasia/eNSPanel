@@ -6,6 +6,12 @@ theme:
   palette:
     primary: deep purple
   name: material
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - pymdownx.highlight:
+        use_pygments: true
+    - pymdownx.superfences
 nav:
   - Home: index.md
   - Getting Started:
