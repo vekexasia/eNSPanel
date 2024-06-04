@@ -29,9 +29,17 @@ The daughter board can be designed in any way you like. But there are dimension 
 
 Constraints:
 
-- 100x100mm
+- max 34.6x51.4mm
 - max 1.6mm thickness
 - 1mm pitch for the connector
-- at least x mm clearance from first connector pad to the edge of the board
-- at least y mm clearance from the last connector pad to the edge of the board
+- at least 16.51 mm clearance from first connector pad to the edge of the board
+- at least 8.5 mm clearance from the last connector pad to the edge of the board
 
+All measurements are shown below:
+![img.png](images/constraints-daughter.png)
+ 
+**NOTE**: Please **mind the hole** in the daughter board. The hole is there to allow the daughter board to be slotted in the enclosure. The hole is 2.1mm in radius and is centered at ~3.2mm from left edge and 11.6mm from the top edge.
+
+**NOTE**: Having some clearance is always a good idea.
+
+Also, in case you need to slot an **antenna**, please **use the leftmost edge of the daughter board**!

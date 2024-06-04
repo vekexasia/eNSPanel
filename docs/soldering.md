@@ -16,15 +16,3 @@ The components are circled here:
  
 After soldering the ESP32, the LDO and the capacitors, the ESP32 can be flashed using the bottom right header. 
 
-
-## LD2410 sensor soldering
-
-Several iterations of the PCB were done to try to slot the LD2410 sensor without the need to change anything about the enclosure. Unfortunately, the sensor is too big to fit in the enclosure.
-
-The best compromise was to have the sensor laying on top of the PCB. This way there is a semi-easy way to solder the LD2410 sensor.
-
-To do that:
-
-- place the sensor on the PCB.
-- fill the pins with solder paste,
-- use a hot air gun.

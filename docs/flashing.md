@@ -23,7 +23,7 @@ To enter bootloader mode you need to connect the `EN` and `IO0` pins to ground. 
 ## The First Firmware
 As per the first firmware the following should just work out of the box.
 
-```yml
+```yaml
 esphome:
   name: sample-esp32
   friendly_name: sample-esp32
