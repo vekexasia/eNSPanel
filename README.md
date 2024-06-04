@@ -9,6 +9,7 @@ It features:
 - a buzzer,
 - 2 relays,
 - WiFi & BT via esp32.
+- No more issues in flashing the display
 
 The original firmware did not fit my needs so I decided to create a custom firmware for it using ESPHome. How to do that is out of the scope of this repository.
 
@@ -17,11 +18,11 @@ The original firmware did not fit my needs so I decided to create a custom firmw
 The original PCB is great but I wanted to add some to add a few features:
 
 - LD2410 presence detection sensor
-- microphone for voice commands*
+- microphone for voice commands`*`
 - ~ZigBee router*~ (removed in 1.4)
 - an upgraded ESP32 module (ESP32-S3-WROOM-1-N16R8)
 
-* Requires an S3 module with PSRAM (Ex: ESP32-S3-WROOM-1-N16R)
+`*` Requires an S3 module with PSRAM (Ex: ESP32-S3-WROOM-1-N16R)
 
 All of these features are optional and can be omitted if you don't need them.
 
@@ -54,6 +55,18 @@ For the LD2410 sensor, the way I do it is the following:
 - heat up with a hot air gun until the sensor is soldered
 - test with multimeter.
 
-## ESPHome Firmware
+## Firmwares
+
+The board does not make any assumption on which firmware is going to power the NSPanel. For example I decided to go with a custom ESPHome firmware.
+
+### ESPHome Firmware
 
 With composability in mind, The firmware is split into different files to be "required". This allows you to easily import only the features you need.
+
+The ESPHome firmware is located under the `ESPHome` folder.
+
+### NSPanel Lovelace UI
+
+The board is compatible with the famous [NSPanel Lovelace UI](https://github.com/sairon/esphome-nspanel-lovelace-ui). But I'd suggest to use the [ESPHome](https://github.com/sairon/esphome-nspanel-lovelace-ui) based firmware instead of the original one.
+
+This would allow you to easily reuse some of the ESPHome config files provided in the `ESPHome` folder.

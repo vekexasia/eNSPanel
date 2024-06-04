@@ -1,0 +1,18 @@
+rtttl:
+  id: buzzer
+  output: buzzer_out
+
+output:
+  - platform: ledc
+    id: buzzer_out
+    pin:
+      number: 7
+
+api:
+  services:
+    - service: play_rtttl
+      variables:
+        song_str: string
+      then:
+        - rtttl.play:
+            rtttl: !lambda 'return song_str;'

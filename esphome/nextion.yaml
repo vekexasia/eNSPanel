@@ -1,0 +1,176 @@
+esphome:
+  on_boot:
+    priority: 200
+    then:
+      - lambda: |-
+          screen_power->turn_on();
+          delay(1000);
+
+      - wait_until:
+          condition:
+            - lambda: !lambda return disp1->is_setup();
+          timeout: 20s
+      - script.execute: exit_reparse
+      - wait_until:
+          condition:
+            - lambda: !lambda return disp1->is_setup();
+          timeout: 20s
+      - lambda: |-
+          static const char *const TAG = "on_boot";
+          if (not disp1->is_setup()) {
+            ESP_LOGE(TAG, "No response from Nextion display");
+            ESP_LOGD(TAG, "Turn off Nextion");
+            screen_power->turn_off();
+            delay(1500);
+            ESP_LOGD(TAG, "Turn on Nextion");
+            screen_power->turn_on();
+          }
+      - wait_until:
+          condition:
+            - lambda: !lambda return disp1->is_setup();
+          timeout: 20s
+      - lambda: |-
+          static const char *const TAG = "on_boot";
+          if (not disp1->is_setup()) {
+            ESP_LOGE(TAG, "No response from Nextion display");
+          }
+          ESP_LOGD(TAG, "Finished");
+
+api:
+  services:
+    - service: upload_tft
+      then:
+        - lambda: 'id(disp1)->upload_tft();'
+    - service: blank_tft
+      then:
+        - lambda: |-
+            id(disp1)->set_tft_url("$blank_tft_url");
+            id(disp1)->upload_tft();
+        
+    # Service to control the visible page from Home Assistant
+    - service: set_page
+      variables:
+        page: int
+      then:
+        - lambda: id(disp1).send_command_printf("page %i", page);
+        
+    # Service to show a notification on the screen for 15 s. Tap or wait to close
+    - service: alert
+      variables:
+        message: string
+      then:
+        - lambda: |-
+            id(disp1).send_command_printf("page alert");
+            id(disp1).set_component_text_printf("alert_message", "%s", message.c_str());
+        - rtttl.play: "twobits:d=4,o=5,b=220:c6,8g,8g,a,g,p,b,c6"
+uart:
+  - tx_pin: 5
+    rx_pin: 6
+    baud_rate: 115200
+    rx_buffer_size: 4096
+    id: tf_uart 
+
+number:
+  # Screen brightness
+  - platform: template
+    name: Brightness
+    id: brightness
+    entity_category: config
+    unit_of_measurement: '%'
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 30
+    set_action:
+      then:
+        - lambda: 'id(disp1).set_backlight_brightness(x/100);'
+
+switch: 
+  # Turn screen power on/off. Easy way to configure the screen power control, but this should not be used from HA, as all components must be re-initialized afterwards. For lights, names of lights etc. this practically means that the state must change once to happen.
+  - platform: gpio
+    name: Screen Power
+    id: screen_power
+    entity_category: config
+    pin:
+      number: 4
+      inverted: true
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      then:
+        - delay: 2s
+        - script.execute: restore_relay_state_ui
+  
+    # Basically a global variable to keep track on whether the Nextion display is ready or not. Delays initial info from HA to the display.
+  - platform: template
+    name: Nextion inited
+    id: nextion_init
+    entity_category: config
+    restore_mode: ALWAYS_OFF
+    assumed_state: off
+    optimistic: true
+
+display:
+  - platform: nextion
+    id: disp1
+    uart_id: tf_uart
+    tft_url: $tft_url
+    on_page: 
+      then: 
+        - script.execute: restore_nspanel_texts
+    on_setup:
+      then:
+        - number.set:
+            id: brightness
+            value: 30
+        - script.execute: restore_relay_state_ui
+        - wait_until:
+            api.connected
+        - switch.template.publish:
+            id: nextion_init
+            state: on
+        - script.execute: restore_nspanel_texts
+
+script:
+  - id: exit_reparse
+    mode: restart
+    then:
+      - logger.log: "Exit reparse"
+      - uart.write:
+          id: tf_uart
+          data: "DRAKJHSUYDGBNCJHGJKSHBDN"
+      - uart.write:
+          id: tf_uart
+          data: [0xFF, 0xFF, 0xFF]
+  - id: restore_relay_state_ui
+    then:
+      - lambda: 'id(disp1).set_component_text_printf("home.thermo_active", "%s", id(relay_1).state ? "" : " ");'
+  - id: restore_nspanel_texts
+    then:
+      - logger.log: "Restoring texts"
+      - lambda: |-
+          std::string main = id(nspanel_texts).state;   
+          std::string md = "| ";   
+          
+          size_t pos = 0;   
+          int index = 0;   
+          while ((pos = main.find(md)) != std::string::npos) {   
+            std::string s = main.substr(0, pos);   
+            main.erase(0, pos + md.length());  
+            std::string delimiter = ",";   
+            std::string key = s.substr(0, s.find(delimiter));   
+            std::string value = s.substr(key.length() + 1, s.rfind(delimiter) - key.length()  - 1); 
+            ESP_LOGD("custom", "Global2 value state[%d]: '%s' banana '%s' lamponi", index, key.c_str(), value.c_str());   
+            id(disp1).set_component_text_printf(key.c_str(), "%s", value.c_str());
+          }
+
+text_sensor:
+  - platform: homeassistant
+    id: nspanel_texts
+    entity_id: sensor.nspanel_texts
+    attribute: value
+    
+    on_value:
+      then:
+        - logger.log: "Homeassistant texts"
+        - script.execute: restore_nspanel_texts
+        

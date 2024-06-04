@@ -1,0 +1,14 @@
+i2s_audio:
+  i2s_lrclk_pin: GPIO38
+  i2s_bclk_pin: GPIO40
+microphone:
+  - platform: i2s_audio
+    id: mic
+    adc_type: external
+    i2s_din_pin: GPIO39
+    pdm: false
+    channel: left
+voice_assistant:
+  microphone: mic
+  auto_gain: 31dBFS
+#  noise_suppression_level: 2

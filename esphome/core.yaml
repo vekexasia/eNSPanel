@@ -1,0 +1,131 @@
+esphome:
+  name: $device_name
+  friendly_name: $friendly_devicename
+
+mqtt:
+  broker: !secret mqtt_ip
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  discovery: false
+  topic_prefix: "termostati/$device_name"
+  log_topic: null
+  
+climate:
+  - platform: thermostat
+    id: termostato
+    name: "Termostat"
+    sensor: temperature
+    min_heating_off_time: 60s
+    min_heating_run_time: 60s
+    min_idle_time: 30s
+    heat_action:
+      - switch.turn_on: relay_1
+    idle_action:
+      - switch.turn_off: relay_1
+    default_preset: Home
+    preset:
+      - name: Home
+        default_target_temperature_low: $target_temp_home
+        mode: HEAT
+      - name: Comfort
+        default_target_temperature_low: $target_temp_comfort
+        mode: HEAT
+    on_state:
+      - lambda: |-
+          id(disp1).set_component_text_printf("home.set_temp", "%.1f °C", id(termostato).target_temperature);
+
+binary_sensor:
+  # Left button below the display
+  - platform: gpio
+    name: $friendly_devicename Left Button
+    pin:
+      number: GPIO42
+      inverted: true
+    id: left_button
+    on_press:
+      then:
+        - switch.toggle: relay_1
+
+  # Right button below the display
+  - platform: gpio
+    name: $friendly_devicename Right Button
+    pin:
+      number: GPIO41
+      inverted: true
+    id: right_button
+
+sensor:
+  # Internal temperature sensor, adc value
+  - platform: adc
+    id: ntc_source
+    pin: 9
+    update_interval: 10s
+    attenuation: auto
+
+  # Internal temperature sensor, adc reading converted to resistance (calculation)
+  - platform: resistance
+    id: resistance_sensor
+    sensor: ntc_source
+    configuration: UPSTREAM
+    resistor: 20kOhm
+    
+
+  # Internal temperature sensor, resistance to temperature (calculation)
+  - platform: ntc
+    id: temperature
+    sensor: resistance_sensor
+    calibration:
+      b_constant: 3950
+      reference_temperature: 25°C
+      reference_resistance: 20kOhm
+    name: Temperature
+    filters:
+      - median:
+          window_size: 10
+          send_every: 5
+          send_first_at: 5
+    on_value:
+      then:
+        - lambda: |-
+            float a = x;
+            id(disp1).set_component_text_printf("home.temp_big", "%.1f", a);
+
+switch:
+  # Physical relay 1
+  - platform: gpio
+    name: Relay 1
+    id: relay_1
+    pin:
+      number: 11
+
+    on_turn_on:
+      then:
+        - script.execute: restore_relay_state_ui
+    on_turn_off:
+      then:
+        - script.execute: restore_relay_state_ui
+  # Physical relay 2
+  - platform: gpio
+    name: Relay 2
+    id: relay_2
+    pin:
+      number: 12
+
+  - platform: restart
+    name: "Restart"
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: CET-1CEST,M3.5.0,M10.5.0/3
+    on_time:
+      - 
+        seconds: 0
+        minutes: /1
+        then:
+          - lambda: id(disp1).set_component_text_printf("home.time", "%02i:%02i", id(sntp_time).now().hour, id(sntp_time).now().minute);
+    on_time_sync:
+      then:
+          - logger.log: 
+              format: "Time sync %02i:%02i"
+              args: [id(sntp_time).now().hour, id(sntp_time).now().minute]

@@ -1,0 +1,44 @@
+# Configuration for LD2410 presence sencor.
+# The sensor needs to be actively powered on to work. that is why GPIO16 is used for.
+switch:
+  - platform: gpio
+    name: LD2410 Power
+    id: ld2410_power
+    pin:
+      number: 16
+      inverted: false
+    restore_mode: ALWAYS_OFF
+
+uart:
+  - tx_pin: 17
+    rx_pin: 18
+    baud_rate: 256000
+    parity: NONE
+    stop_bits: 1
+    id: ld2410_uart
+
+ld2410:
+  uart_id: ld2410_uart
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Presence
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+
+sensor:
+  - platform: ld2410
+    moving_distance:
+      name : Moving Distance
+    still_distance:
+      name: Still Distance
+    moving_energy:
+      name: Move Energy
+    still_energy:
+      name: Still Energy
+    detection_distance:
+      name: Detection Distance
+  

@@ -1,0 +1,78 @@
+binary_sensor:
+  # minus
+  - platform: nextion
+    id: minus
+    internal: true
+    page_id: 0
+    component_id: 11
+
+    on_release:
+      - lambda: |-
+          auto call = id(termostato).make_call();
+          call.set_target_temperature(id(termostato).target_temperature - 0.5f);
+          call.perform();
+  # plus
+  - platform: nextion
+    id: plus
+    internal: true
+    page_id: 0
+    component_id: 12
+    on_release:
+      - lambda: |-
+          auto call = id(termostato).make_call();
+          call.set_target_temperature(id(termostato).target_temperature + 0.5f);
+          call.perform();
+
+  - platform: nextion
+    internal: true
+    id: carraio
+    page_id: 0
+    component_id: 10
+    on_click:
+      - rtttl.play: "twobits:d=8,o=0,b=200:c0"
+      - homeassistant.service:
+          service: switch.turn_on
+          data:
+            entity_id: switch.carraio_relay_0
+
+sensor:
+  - platform: nextion
+    id: spotifyselection
+    name: Spotify Selection
+    internal: true
+    variable_name: spotiselection
+    on_value:
+      then:
+        - mqtt.publish:
+            topic: termostati/spotify_selection
+            payload: !lambda |-
+              return std::to_string((int)x);
+            retain: true
+        - delay: 1s
+        - homeassistant.service:
+            service: script.turn_on
+            data:
+              entity_id: script.nspanel_spotify_start
+
+  - platform: nextion
+    id: vacuumselection
+    name: Vacuum Selection
+    internal: true
+    variable_name: vacuumselection
+    on_value:
+      then:
+        - mqtt.publish:
+            topic: termostati/vacuum_selection
+            payload: !lambda |-
+              return std::to_string((int)x);
+            retain: true
+        - lambda: |-
+            int a = x;
+            ESP_LOGD("custom", "vacuum %d", a);   
+        - delay: 1s
+        - homeassistant.service:
+            service: script.turn_on
+            data:
+              entity_id: script.nspanel_vacuum_start
+
+ 
