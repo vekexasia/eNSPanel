@@ -11,7 +11,7 @@ nav:
   - Getting Started:
     - PCB Ordering: pcb.md
     - Bill Of Material: bom.md
-    - Soldering: soldering.md
+    - Soldering: docs/soldering.md
     - First firmware flash: flashing.md
   - Optional Features:
     - Presence Sensor: presence-sensor.md
