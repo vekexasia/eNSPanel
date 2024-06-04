@@ -6,3 +6,16 @@ theme:
   palette:
     primary: deep purple
   name: material
+nav:
+  - Home: index.md
+  - Getting Started:
+    - PCB Ordering: pcb.md
+    - Bill Of Material: bom.md
+    - Soldering: soldering.md
+    - First firmware flash: flashing.md
+  - Optional Features:
+    - Presence Sensor: presence-sensor.md
+    - Buzzer: buzzer.md
+    - Microphone: microphone.md 
+  - Daughter Boards: daughter.md
+  - Known Issues: known-issues.md

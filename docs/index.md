@@ -28,6 +28,5 @@ Another reason why the NSPanel needed an upgrade was/is the **lack of other func
 
 Initially I also wanted to slot a ZigBee module that could also enhance my home ZigBee network but starting from v1.4 I decided that mother-daughter approach was the best to minimize costs and reduce waste.
 
-For example one could design a daughter board with a small speaker to engage with the voice assistant... Want an atmospheric sensor? design a board for it. Not happy with the AI capabilities of the slotted ESP32-S3? you get the idea :)
+For example one could design a daughter board with a small speaker to engage with the voice assistant... Want an **atmospheric sensor?** design a board for it. Not happy with the AI capabilities of the slotted ESP32-S3? you get the idea :)
 
-  
