@@ -1,4 +1,8 @@
-site_name: My Docs
+site_name: eNSPanel Docs
 site_url: https://enspanel-docs.andreabaccega.com
+repo_url: https://github.com/vekexasia/eNSPanel
+repo_name: vekexasia/eNSPanel
 theme:
+  palette:
+    primary: deep purple
   name: material
