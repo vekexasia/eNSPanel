@@ -20,9 +20,10 @@ nav:
     - Bill Of Material: bom.md
     - Soldering: soldering.md
     - First firmware flash: flashing.md
-  - Optional Features:
-    - Presence Sensor: optional/presence.md
-    - Buzzer: buzzer.md
-    - Microphone: microphone.md 
+  - Modules:
+    - Presence Sensor: modules/presence.md
+    - Buzzer: modules/buzzer.md
+    - Microphone: modules/microphone.md
+    - Display: modules/display.md
   - Daughter Boards: daughter.md
   - Known Issues: known-issues.md

@@ -1,10 +1,11 @@
 # Welcome to eNSPanel
 
 For full documentation visit [here](https://enspanel-docs.andreabaccega.com/).
-
+![all-pcbs.png](images/all-pcbs.png)
 ## Features
 
 * LD2410 presence sensor
+* Low cost PCB production (dimensions <100x100mm)
 * Microphone for voice assistant
 * Mother-daughter pcb (to extend functionalities)
 * enclosure compatibility `*`
@@ -20,7 +21,7 @@ For full documentation visit [here](https://enspanel-docs.andreabaccega.com/).
 
 ## Why?
 
-The NSPanel from Sonoff is a great device. I have 8 in my home serving as thermostats and doing much more. Unfortunately their outdated hardware is quite limiting. 
+The NSPanel from SonOff is a great device. I have 8 in my home serving as thermostats and doing much more. Unfortunately their outdated hardware is quite limiting. 
 
 For example one of the reason why the ESPHome version struggles in **uploading the TFT** to the Nextion panel is the lack of free memory.
 

@@ -4,6 +4,62 @@ Its speed, angle and capabilities make it a very versatile sensor. The main draw
  
 Thankfully we can power it via the main PCB. The sensor can be soldered on the main PCB. 
 
+## GPIOs
+
+The LD2410 is wired to the ESP32 using **GPIO17(RX) and GPIO18(TX)**. Furthermore, GPIO16 can be used to cut power to the module.
+
+## Configuration
+
+The most recent configuration yaml can be found in the `esphome` folder inside the repository. A known working configuration is the following:
+
+```yaml
+
+# Configuration for LD2410 presence sencor.
+# The sensor needs to be actively powered on to work. that is why GPIO16 is used for.
+switch:
+  - platform: gpio
+    name: LD2410 Power
+    id: ld2410_power
+    pin:
+      number: 16
+      inverted: false
+    restore_mode: ALWAYS_OFF
+
+uart:
+  - tx_pin: 17
+    rx_pin: 18
+    baud_rate: 256000
+    parity: NONE
+    stop_bits: 1
+    id: ld2410_uart
+
+ld2410:
+  uart_id: ld2410_uart
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: Presence
+    has_moving_target:
+      name: Moving Target
+    has_still_target:
+      name: Still Target
+
+sensor:
+  - platform: ld2410
+    moving_distance:
+      name : Moving Distance
+    still_distance:
+      name: Still Distance
+    moving_energy:
+      name: Move Energy
+    still_energy:
+      name: Still Energy
+    detection_distance:
+      name: Detection Distance
+
+```
+
 ## Drawbacks of slotting the LD2410
 
 Unfortunately due to the size of the sensor and its high frequency of operation, the sensor could not be placed in a more convenient location.
