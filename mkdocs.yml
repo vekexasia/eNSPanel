@@ -21,9 +21,13 @@ nav:
     - Soldering: soldering.md
     - First firmware flash: flashing.md
   - Modules:
-    - Presence Sensor: modules/presence.md
-    - Buzzer: modules/buzzer.md
-    - Microphone: modules/microphone.md
     - Display: modules/display.md
+    - Buzzer: modules/buzzer.md
+    - Thermistor: modules/thermistor.md
+    - Physical Buttons: modules/buttons.md
+    - Relays: modules/relays.md
+    - Presence Sensor: modules/presence.md
+    - Microphone: modules/microphone.md
+  - Voice Assistant: microwakeword.md
   - Daughter Boards: daughter.md
   - Known Issues: known-issues.md
