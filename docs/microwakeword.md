@@ -2,7 +2,7 @@ Since ESPHome supports on-device wake word detection, it is possible to use the 
 
 Considering the chosen module (ESP32-S3-WROOM-1-N16R8) has PSRAM, the eNSPanel is fully capable to perform on-device wake word detection.
 
-After properly configuring the [microphone](/modules/microphone), the following configuration can be used to trigger a voice assistant.
+After properly configuring the [microphone](modules/microphone.md), the following configuration can be used to trigger a voice assistant.
 
 ```yaml
 esphome:

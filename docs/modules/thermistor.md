@@ -48,4 +48,4 @@ sensor:
 
 As you can see the termistor is read and averaged to avoid noise.
 
-Also the ESPHome platform provides a [climate component](https://esphome.io/components/climate/index.html) that can be used to control a heater or a cooler. The climate component can be used to control a relay that turns on a heater or a cooler. Check the [relays](/modules/relays) documentation for more info.
+Also the ESPHome platform provides a [climate component](https://esphome.io/components/climate/index.html) that can be used to control a heater or a cooler. The climate component can be used to control a relay that turns on a heater or a cooler. Check the [relays](relays.md) documentation for more info.

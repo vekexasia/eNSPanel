@@ -28,7 +28,7 @@ switch:
 
 # Climate configuration
 
-As explained in the [thermistor](/modules/thermistor) documentation, the ESPHome platform provides a [climate component](https://esphome.io/components/climate/index.html) that can be used to control a heater or a cooler. The climate component can be used to control a relay that turns on a heater or a cooler. 
+As explained in the [thermistor](thermistor.md) documentation, the ESPHome platform provides a [climate component](https://esphome.io/components/climate/index.html) that can be used to control a heater or a cooler. The climate component can be used to control a relay that turns on a heater or a cooler. 
 
 The following is a sample configuration to leverage one of the relay to control a heater:
 

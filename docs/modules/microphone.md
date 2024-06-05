@@ -58,7 +58,7 @@ Only C5 (top layer) and R3 (bottom layer) are needed to make the microphone to w
 
 Sometimes it might be a pain to test a working microphone. To date I don't know any method more effective than installing the voice assist package and try to speak the wake word.
 
-Aka. You should really check out the [voice assistant](/voice) section of this documentation
+Aka. You should really check out the [voice assistant](../microwakeword.md) section of this documentation
 
 ### Debugging poor audio quality
 

@@ -1,6 +1,6 @@
 # Flashing
 
-After [slotting](/soldering) the ESP32 along with the first required components, you **do not need to solder the header**. Actually it's not a good idea also because the display will not fit anymore and desoldering it is a pain..
+After [slotting](soldering.md) the ESP32 along with the first required components, you **do not need to solder the header**. Actually it's not a good idea also because the display will not fit anymore and desoldering it is a pain..
 
 I would recommend to either use some pogo pin clips like [this one](https://aliexpress.com/item/1005004869027755.html), or just press fit the pins keeping them in place.
 
