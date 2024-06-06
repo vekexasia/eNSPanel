@@ -30,4 +30,5 @@ nav:
     - Microphone: modules/microphone.md
   - Voice Assistant: microwakeword.md
   - Daughter Boards: daughter.md
+  - Text Update Proto: textupdateproto.md
   - Known Issues: known-issues.md
