@@ -31,7 +31,7 @@ $page.$componentName,$value|
 |
 ```
 
-- `$page`: is the page name in the Nextion display
+- `$page`: is the page name in the Nextion display. If the page is the same for all the components you can omit it.
 - `$componentName`: is the component name in the Nextion display
 - `$value`: is the value to be set in the text component
 
@@ -92,3 +92,12 @@ template:
 ```
 
 This is a simple example of how to update the weather information in the Nextion display updating the `weather_now` page components.
+
+## Caveats
+
+As already said a Home Assistant attribute must be used because the state is limited to 255 characters. Also, keep in mind that **nextion components should be marked as `global`**.
+
+
+
+
+
