@@ -18,7 +18,6 @@ sensor:
   - platform: adc
     id: ntc_source
     pin: 9
-    update_interval: 10s
     attenuation: auto
 
   # Internal temperature sensor, adc reading converted to resistance (calculation)
@@ -26,8 +25,7 @@ sensor:
     id: resistance_sensor
     sensor: ntc_source
     configuration: UPSTREAM
-    resistor: 20kOhm
-    
+    resistor: 10kOhm
 
   # Internal temperature sensor, resistance to temperature (calculation)
   - platform: ntc
@@ -36,16 +34,20 @@ sensor:
     calibration:
       b_constant: 3950
       reference_temperature: 25°C
-      reference_resistance: 20kOhm
+      reference_resistance: 10kOhm
     name: Temperature
-    filters:
-      - median:
-          window_size: 10
-          send_every: 5
-          send_first_at: 5
 
+switch:
+  - platform: gpio
+    pin: 3
+    id: ntc_vcc
+interval:
+  - interval: 10s
+    then:
+      - switch.turn_on: ntc_vcc
+      - delay: 100ms
+      - component.update: ntc_source
+      - switch.turn_off: ntc_vcc
 ```
-
-As you can see the termistor is read and averaged to avoid noise.
 
 Also the ESPHome platform provides a [climate component](https://esphome.io/components/climate/index.html) that can be used to control a heater or a cooler. The climate component can be used to control a relay that turns on a heater or a cooler. Check the [relays](relays.md) documentation for more info.

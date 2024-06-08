@@ -9,3 +9,7 @@ Simply download the `gerber.zip` file from the `gerber` folder and upload it to 
 
 Another possibility would be using this [PCBWay shared project](https://www.pcbway.com/project/shareproject/eNSPanel_v2_1_4_f0fd8d8d.html). Be aware that the assembly and BOM in the project page has never been tested.
 
+## PCB Settings
+
+Besides the standard settings, I'd recommend to use HASL lead-free.
+

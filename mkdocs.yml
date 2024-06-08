@@ -17,9 +17,9 @@ nav:
   - Home: index.md
   - Getting Started:
     - PCB Ordering: pcb.md
-    - Bill Of Material: bom.md
     - Soldering: soldering.md
     - First firmware flash: flashing.md
+    - Configuration: configuration.md
   - Modules:
     - Display: modules/display.md
     - Buzzer: modules/buzzer.md
@@ -30,5 +30,7 @@ nav:
     - Microphone: modules/microphone.md
   - Voice Assistant: microwakeword.md
   - Daughter Boards: daughter.md
+  - GPIOs: gpios.md
+  - Change Log: changelog.md
   - Text Update Proto: textupdateproto.md
   - Known Issues: known-issues.md
