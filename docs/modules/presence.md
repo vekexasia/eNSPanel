@@ -66,6 +66,8 @@ Unfortunately due to the size of the sensor and its high frequency of operation,
 
 Furthermore, due to height limitations in the current enclosure, you will need to print a 3d part to replace the original one.
 
+The 3D part can be found in the `3d` folder. This is the only replacement part needed to slot the LD2410 sensor.
+
 ## LD2410 sensor soldering
 
 Several iterations of the PCB were done to try to slot the LD2410 sensor without the need to change anything about the enclosure. Unfortunately, the sensor is too big to fit in the enclosure.
