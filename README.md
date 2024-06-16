@@ -34,4 +34,4 @@ Also, since many manifacturing companies **provide a big discount for PCBs that 
 
 ## I want it... tell me more!
 
-The documentation is quite extensive and can be found in the [docs](docs) folder or in the [website](https://enspanel-docs.andreabaccega.com/).
+The documentation is quite extensive and can be found in the **[website](https://enspanel-docs.andreabaccega.com/)**.
