@@ -30,3 +30,8 @@ Initially I also wanted to slot a ZigBee module that could also enhance my home 
 
 For example one could design a daughter board with a small speaker to engage with the voice assistant... Want an **atmospheric sensor?** design a board for it. Not happy with the AI capabilities of the slotted ESP32-S3? you get the idea :)
 
+## How?
+
+Since the replacement board needed to be compatible with the original board, a 1:1 SVG has been created with relevant holes and dimentions.  
+
+![Reference SVG](images/nspanel.svg)
